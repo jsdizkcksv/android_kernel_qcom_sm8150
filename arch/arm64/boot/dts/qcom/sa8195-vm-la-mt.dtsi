@@ -17,6 +17,14 @@
 			reg = <0x0 0xa0000000 0x0 0x20000000>;
 			label = "pmem_shared_mem";
 		};
+
+		venus_qseecom_mem: venus_qseecom_region@0 {
+			linux,reserve-contiguous-region;
+			linux,reserve-region;
+			linux,memory-limit = <0x90000000>;
+			reg = <0 0 0 0x1200000>;
+			label = "venus_qseecom_mem";
+		};
 	};
 
 	/delete-node/ cpus;
