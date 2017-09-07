@@ -121,6 +121,8 @@
 	of_flat_dt_is_compatible(of_get_flat_dt_root(), "qcom,trinket-iot")
 #define early_machine_is_trinketp_iot()       \
 	of_flat_dt_is_compatible(of_get_flat_dt_root(), "qcom,trinketp-iot")
+#define early_machine_is_msm8953()	\
+	of_flat_dt_is_compatible(of_get_flat_dt_root(), "qcom,msm8953")
 #else
 #define of_board_is_sim()		0
 #define of_board_is_rumi()		0
@@ -170,6 +172,7 @@
 #define early_machine_is_sda429w()	0
 #define early_machine_is_trinket_iot()	0
 #define early_machine_is_trinketp_iot()	0
+#define early_machine_is_msm8953()	0
 #endif
 
 #define PLATFORM_SUBTYPE_MDM	1
@@ -222,6 +225,7 @@ enum msm_cpu {
 	MSM_CPU_SDA429W,
 	MSM_CPU_TRINKET_IOT,
 	MSM_CPU_TRINKETP_IOT,
+	MSM_CPU_8953,
 };
 
 struct msm_soc_info {
