@@ -263,5 +263,15 @@ config ARCH_SDM429W
 	select MSM_RPM_LOG
 	select MSM_RPM_STATS_LOG
 
+config ARCH_MSM8953
+	bool "Enable support for MSM8953"
+	select CPU_V7
+	select HAVE_ARM_ARCH_TIMER
+	select PINCTRL
+	select QCOM_SCM if SMP
+	select PM_DEVFREQ
+	select COMMON_CLK
+	select COMMON_CLK_QCOM
+	select QCOM_GDSC
 endmenu
 endif
