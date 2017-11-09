@@ -8,3 +8,4 @@ obj-$(CONFIG_ARCH_SDXPRAIRIE) += board-sdxprairie.o
 obj-$(CONFIG_ARCH_MDM9607) += board-mdm9607.o
 obj-$(CONFIG_ARCH_SDM660) += board-660.o
 obj-$(CONFIG_ARCH_MSM8953) += board-msm8953.o
+obj-$(CONFIG_ARCH_SDM450) += board-sdm450.o
