@@ -14,4 +14,5 @@ obj-$(CONFIG_SMB1398_CHARGER)	+= smb1398-charger.o pmic-voter.o
 obj-$(CONFIG_SMB358_CHARGER)	+= smb358-charger.o
 obj-$(CONFIG_QPNP_FG)			+= qpnp-fg.o
 obj-$(CONFIG_QPNP_SMBCHARGER)	+= qpnp-smbcharger.o pmic-voter.o
+obj-$(CONFIG_QPNP_TYPEC)	+= qpnp-typec.o
 
