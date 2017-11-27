@@ -13,8 +13,12 @@ obj-$(CONFIG_COMMON_CLK_MSM)	+= gdsc.o
 obj-$(CONFIG_MSM_CLK_CONTROLLER_V2)	+= msm-clock-controller.o
 
 ifeq ($(CONFIG_COMMON_CLK_MSM), y)
+
 # MDM9607
 obj-$(CONFIG_ARCH_MDM9607)	+= clock-gcc-9607.o
 # ACPU clock
 obj-$(CONFIG_ARCH_MDM9607)	+= clock-a7.o
+# MSM8953
+obj-$(CONFIG_ARCH_MSM8953)	+= clock-gcc-8953.o
+
 endif
