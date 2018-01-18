@@ -293,7 +293,7 @@ struct dsi_shared_data {
 	struct clk *pixel1_parent;
 
 	/* DSI core regulators */
-	struct dss_module_power power_data[DSI_MAX_PM];
+	struct mdss_module_power power_data[DSI_MAX_PM];
 
 	/* Shared mutex for DSI PHY regulator */
 	struct mutex phy_reg_lock;
@@ -431,10 +431,10 @@ struct mdss_dsi_ctrl_pdata {
 	void (*switch_mode)(struct mdss_panel_data *pdata, int mode);
 	struct mdss_panel_data panel_data;
 	unsigned char *ctrl_base;
-	struct dss_io_data ctrl_io;
-	struct dss_io_data mmss_misc_io;
-	struct dss_io_data phy_io;
-	struct dss_io_data phy_regulator_io;
+	struct mdss_io_data ctrl_io;
+	struct mdss_io_data mmss_misc_io;
+	struct mdss_io_data phy_io;
+	struct mdss_io_data phy_regulator_io;
 	int reg_size;
 	u32 flags;
 	struct clk *byte_clk;
@@ -493,8 +493,8 @@ struct mdss_dsi_ctrl_pdata {
 	u32 byte_clk_rate_bkp;
 	u32 esc_clk_rate_hz;
 	bool refresh_clk_rate; /* flag to recalculate clk_rate */
-	struct dss_module_power panel_power_data;
-	struct dss_module_power power_data[DSI_MAX_PM]; /* for 8x10 */
+	struct mdss_module_power panel_power_data;
+	struct mdss_module_power power_data[DSI_MAX_PM]; /* for 8x10 */
 	u32 dsi_irq_mask;
 	struct mdss_hw *dsi_hw;
 	struct mdss_intf_recovery *recovery;
