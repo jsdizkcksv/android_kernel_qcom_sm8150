@@ -1103,3 +1103,8 @@ config RENAME_BLOCK_DEVICE
 	  to a name that is needed.
 
 source "drivers/soc/qcom/wcnss/Kconfig"
+
+config SERIAL_NUM
+	bool "Enable Serial Number Proc Interface"
+	help
+	  Provide a interface for reading CPU serial number
