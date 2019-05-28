@@ -43,6 +43,7 @@
 #include <linux/extcon.h>
 #include <linux/pmic-voter.h>
 #include <linux/iio/consumer.h>
+#include <linux/qpnp/qpnp-revid.h>
 
 /* Mask/Bit helpers */
 #define _SMB_MASK(BITS, POS) \
