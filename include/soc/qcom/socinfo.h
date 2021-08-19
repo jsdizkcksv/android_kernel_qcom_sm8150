@@ -168,6 +168,9 @@
 #define early_machine_is_sda660()	0
 #define early_machine_is_sdm429w()	0
 #define early_machine_is_sda429w()	0
+#define early_machine_is_msm8917()	0
+#define early_machine_is_msm8937()	0
+#define early_machine_is_msm8940()	0
 #define early_machine_is_trinket_iot()	0
 #define early_machine_is_trinketp_iot()	0
 #endif
@@ -220,6 +223,9 @@ enum msm_cpu {
 	MSM_CPU_SDA660,
 	MSM_CPU_SDM429W,
 	MSM_CPU_SDA429W,
+	MSM_CPU_8917,
+	MSM_CPU_8937,
+	MSM_CPU_8940,
 	MSM_CPU_TRINKET_IOT,
 	MSM_CPU_TRINKETP_IOT,
 };
