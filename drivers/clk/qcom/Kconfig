@@ -696,3 +696,12 @@ config CLOCK_CPU_SDM
 	 Support for the cpu clock controller on SDM based devices(e.g. SDM429).
 	 Say Y if you want to support CPU clock scaling using
 	 CPUfreq drivers for dynamic power management.
+
+config MSM_GCC_8937
+    tristate "MSM8937 Global Clock Controller"
+	depends on COMMON_CLK_QCOM
+	help
+	  Support for the global clock controller on MSM8937 devices.
+	  Say Y if you want to use peripheral devices such as UART, SPI,
+	  I2C, USB, UFS, SDCC, Display, Camera, Video etc.
+

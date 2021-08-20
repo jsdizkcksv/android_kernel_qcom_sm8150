@@ -78,6 +78,7 @@ obj-$(CONFIG_QCOM_CLK_RPM) += clk-rpm.o
 obj-$(CONFIG_QCOM_CLK_SMD_RPM) += clk-smd-rpm.o
 obj-$(CONFIG_QCOM_CLK_VIRT) += clk-virt.o clk-virt-sm8150.o clk-virt-sm6150.o
 obj-$(CONFIG_QCS_CMN_BLK_PLL) += cmn-blk-pll.o
+obj-$(CONFIG_MSM_GCC_8937) += gcc-msm8937.o
 obj-$(CONFIG_SDM_DEBUGCC_429W) += debugcc-sdm429w.o
 obj-$(CONFIG_SDM_GCC_429W) += gcc-sdm429w.o
 obj-$(CONFIG_SM_CAMCC_ATOLL) += camcc-atoll.o
