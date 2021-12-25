@@ -22,7 +22,9 @@
 
 #define FLASH_LED_PREPARE_OPTIONS_MASK	GENMASK(3, 0)
 
-#if (defined CONFIG_LEDS_QTI_FLASH || defined CONFIG_LEDS_QPNP_FLASH_V2)
+int qpnp_flash_register_led_prepare(struct device *dev, void *data);
+
+#if (defined CONFIG_LEDS_QTI_FLASH || defined CONFIG_LEDS_QPNP_FLASH || defined CONFIG_LEDS_QPNP_FLASH_V2)
 int qpnp_flash_led_prepare(struct led_trigger *trig, int options,
 					int *max_current);
 #else

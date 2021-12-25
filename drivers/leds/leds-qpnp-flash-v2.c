@@ -1,4 +1,4 @@
-/* Copyright (c) 2016-2019, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2016-2020, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -1709,7 +1709,7 @@ static int qpnp_flash_led_regulator_control(struct led_classdev *led_cdev,
 	return 0;
 }
 
-int qpnp_flash_led_prepare(struct led_trigger *trig, int options,
+static int qpnp_flash_leds_prepare(struct led_trigger *trig, int options,
 					int *max_current)
 {
 	struct led_classdev *led_cdev;
@@ -2832,6 +2832,13 @@ static int qpnp_flash_led_probe(struct platform_device *pdev)
 	}
 
 	spin_lock_init(&led->lock);
+
+	rc = qpnp_flash_register_led_prepare(&pdev->dev,
+					     qpnp_flash_leds_prepare);
+	if (rc < 0) {
+		pr_err("Failed to register flash_led_prepare, rc=%d\n", rc);
+		goto sysfs_fail;
+	}
 
 	dev_set_drvdata(&pdev->dev, led);
 
