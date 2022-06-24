@@ -443,6 +443,12 @@ static struct msm_soc_info cpu_of_id[] = {
 	/* atollab ID */
 	[443] = {MSM_CPU_ATOLL_AB, "ATOLL-AB"},
 
+	/* TRINKET-IOT IDs*/
+	[467] = {MSM_CPU_TRINKET_IOT, "TRINKET-IOT"},
+
+	/* TRINKETP-IOT IDs*/
+	[468] = {MSM_CPU_TRINKETP_IOT, "TRINKETP-IOT"},
+
 	/* SDM660 ID */
 	[317] = {MSM_CPU_SDM660, "SDM660"},
 	[324] = {MSM_CPU_SDA660, "SDA660"},
@@ -463,6 +469,11 @@ static struct msm_soc_info cpu_of_id[] = {
 
 	/* MSM8940 IDs */
 	[313] = {MSM_CPU_8940, "MSM8940"},
+
+	/* Uninitialized IDs are not known to run Linux.
+	 * MSM_CPU_UNKNOWN is set to 0 to ensure these IDs are
+	 * considered as unknown CPU.
+	 */
 };
 
 static enum msm_cpu cur_cpu;

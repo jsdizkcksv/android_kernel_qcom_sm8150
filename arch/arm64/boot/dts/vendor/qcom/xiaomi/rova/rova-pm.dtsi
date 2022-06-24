@@ -39,7 +39,7 @@
 		status = "okay";
 	};
 };
-
+/*
 &pm8937_vadc {
 	/delete-node/ case_therm;
 	mpp4 {
@@ -48,7 +48,7 @@
 		qcom,hw-settle-time = <200>;
 		qcom,pre-scaling = <1 1>;
 	};
-};
+}; */
 
 &spmi_bus {
       qcom,pm8937@0 {

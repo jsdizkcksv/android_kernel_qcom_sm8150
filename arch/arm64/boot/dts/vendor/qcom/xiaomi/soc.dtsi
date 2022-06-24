@@ -16,6 +16,10 @@
 	reg = <0x0 0x84a00000 0x0 0x1E00000>;
 };
 
+&apps_iommu {
+	qcom,no-aarch64;
+};
+
 &soc {
 	qcom,wdt@b017000 {
 		qcom,bark-time = <15000>;

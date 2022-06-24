@@ -384,4 +384,19 @@ config ARCH_ZYNQMP
 	help
 	  This enables support for Xilinx ZynqMP Family
 
+config MACH_XIAOMI_ROVA
+	bool "Enable Support for Xiaomi Redmi 4A (rolex)"
+	help
+	  This enables support for Xiaomi Redmi 4A (rolex).
+
+config MACH_XIAOMI_LAND
+	bool "Enable Support for Xiaomi Redmi 3S/3X(land)"
+	help
+	  This enables support for Xiaomi Redmi 3S/3X(land).
+
+config MACH_XIAOMI_SANTONI
+	bool "Enable Support for Xiaomi Redmi 4/4X(santoni)"
+	help
+	  This enables support for Xiaomi Redmi 4/4X(santoni).
+
 endmenu
