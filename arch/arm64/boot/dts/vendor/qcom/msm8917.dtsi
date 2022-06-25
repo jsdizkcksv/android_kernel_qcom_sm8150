@@ -841,6 +841,7 @@
 			rpm_requests: rpm_requests@0 {
 				compatible = "qcom,rpm-smd";
 				qcom,smd-channels = "rpm_requests";
+				qcom,smd-force-open;
 			};
 		};
 	};
