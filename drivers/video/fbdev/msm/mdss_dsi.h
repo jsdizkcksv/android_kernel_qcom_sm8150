@@ -731,10 +731,10 @@ int mdss_dsi_check_panel_status(struct mdss_dsi_ctrl_pdata *ctrl, void *arg);
 
 void mdss_dsi_debug_bus_init(struct mdss_dsi_data *sdata);
 int mdss_dsi_get_dt_vreg_data(struct device *dev,
-	struct device_node *of_node, struct dss_module_power *mp,
+	struct device_node *of_node, struct mdss_module_power *mp,
 	enum dsi_pm_type module);
 void mdss_dsi_put_dt_vreg_data(struct device *dev,
-	struct dss_module_power *module_power);
+	struct mdss_module_power *module_power);
 
 static inline const char *__mdss_dsi_pm_name(enum dsi_pm_type module)
 {

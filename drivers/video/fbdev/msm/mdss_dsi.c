@@ -589,7 +589,7 @@ void mdss_dsi_put_dt_vreg_data(struct device *dev,
 }
 
 int mdss_dsi_get_dt_vreg_data(struct device *dev,
-	struct device_node *of_node, struct dss_module_power *mp,
+	struct device_node *of_node, struct mdss_module_power *mp,
 	enum dsi_pm_type module)
 {
 	int i = 0, rc = 0;

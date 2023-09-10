@@ -127,23 +127,23 @@ static struct mdss_hw hdmi_tx_hw = {
 	.irq_handler = hdmi_tx_isr,
 };
 
-static struct mdss_gpio hpd_gpio_config[] = {
+static struct mmdss_gpio hpd_gpio_config[] = {
 	{0, 1, COMPATIBLE_NAME "-hpd"},
 	{0, 1, COMPATIBLE_NAME "-mux-en"},
 	{0, 0, COMPATIBLE_NAME "-mux-sel"},
 	{0, 1, COMPATIBLE_NAME "-mux-lpm"}
 };
 
-static struct mdss_gpio ddc_gpio_config[] = {
+static struct mmdss_gpio ddc_gpio_config[] = {
 	{0, 1, COMPATIBLE_NAME "-ddc-mux-sel"},
 	{0, 1, COMPATIBLE_NAME "-ddc-clk"},
 	{0, 1, COMPATIBLE_NAME "-ddc-data"}
 };
 
-static struct mdss_gpio core_gpio_config[] = {
+static struct mmdss_gpio core_gpio_config[] = {
 };
 
-static struct mdss_gpio cec_gpio_config[] = {
+static struct mmdss_gpio cec_gpio_config[] = {
 	{0, 1, COMPATIBLE_NAME "-cec"}
 };
 
@@ -758,7 +758,7 @@ static int hdmi_tx_update_pixel_clk(struct hdmi_tx_ctrl *hdmi_ctrl)
 
 	pr_debug("rate %ld\n", power_data->clk_config->rate);
 
-	rc = msm_mdss_clk_set_rate(power_data->clk_config, power_data->num_clk);
+	rc = msm_mmdss_clk_set_rate(power_data->clk_config, power_data->num_clk);
 	if (rc < 0)
 		pr_err("failed to set clock rate %lu\n",
 			power_data->clk_config->rate);
@@ -2260,7 +2260,7 @@ static int hdmi_tx_read_sink_info(struct hdmi_tx_ctrl *hdmi_ctrl)
 {
 	int status = 0;
 	void *data;
-	struct dss_io_data *io;
+	struct mdss_io_data *io;
 	u32 sink_max_pclk;
 
 	if (!hdmi_ctrl) {
@@ -2806,7 +2806,7 @@ static int hdmi_tx_enable_power(struct hdmi_tx_ctrl *hdmi_ctrl,
 		mdss_update_reg_bus_vote(hdmi_ctrl->pdata.reg_bus_clt[module],
 			VOTE_INDEX_LOW);
 
-		rc = msm_mdss_clk_set_rate(power_data->clk_config,
+		rc = msm_mmdss_clk_set_rate(power_data->clk_config,
 			power_data->num_clk);
 		if (rc) {
 			DEV_ERR("%s: failed to set clks rate for %s. err=%d\n",
@@ -4158,8 +4158,8 @@ static int hdmi_tx_init_power_data(struct device *dev,
 {
 	int num_clk = 0, i = 0, rc = 0;
 	int hpd_clk_count = 0, core_clk_count = 0;
-	struct dss_module_power *hpd_power_data = NULL;
-	struct dss_module_power *core_power_data = NULL;
+	struct mdss_module_power *hpd_power_data = NULL;
+	struct mdss_module_power *core_power_data = NULL;
 	const char *clk_name;
 
 	num_clk = of_property_count_strings(dev->of_node,
@@ -4230,8 +4230,8 @@ static int hdmi_tx_get_dt_clk_data(struct device *dev,
 	int num_clk = 0;
 	int hpd_clk_index = 0, core_clk_index = 0;
 	int hpd_clk_count = 0, core_clk_count = 0;
-	struct dss_module_power *hpd_power_data = NULL;
-	struct dss_module_power *core_power_data = NULL;
+	struct mdss_module_power *hpd_power_data = NULL;
+	struct mdss_module_power *core_power_data = NULL;
 
 	if (!dev) {
 		pr_err("%s: invalid device\n", __func__);
@@ -4265,14 +4265,14 @@ static int hdmi_tx_get_dt_clk_data(struct device *dev,
 
 		if (hdmi_tx_is_hpd_clk(clk_name)
 				&& hpd_clk_index < hpd_clk_count) {
-			struct dss_clk *clk =
+			struct mdss_clk *clk =
 				&hpd_power_data->clk_config[hpd_clk_index];
 			strlcpy(clk->clk_name, clk_name, sizeof(clk->clk_name));
 			clk->type = DSS_CLK_AHB;
 			hpd_clk_index++;
 		} else if (hdmi_tx_is_core_clk(clk_name)
 				&& core_clk_index < core_clk_count) {
-			struct dss_clk *clk =
+			struct mdss_clk *clk =
 				&core_power_data->clk_config[core_clk_index];
 			strlcpy(clk->clk_name, clk_name, sizeof(clk->clk_name));
 			clk->type = DSS_CLK_PCLK;
@@ -4518,7 +4518,7 @@ static int hdmi_tx_get_dt_gpio_data(struct device *dev,
 {
 	int i, j;
 	int mp_gpio_cnt = 0, gpio_list_size = 0;
-	struct mdss_gpio *gpio_list = NULL;
+	struct mmdss_gpio *gpio_list = NULL;
 	struct device_node *of_node = NULL;
 
 	DEV_DBG("%s: module: '%s'\n", __func__, hdmi_tx_pm_name(module_type));
@@ -4570,7 +4570,7 @@ static int hdmi_tx_get_dt_gpio_data(struct device *dev,
 	DEV_DBG("%s: mp_gpio_cnt = %d\n", __func__, mp_gpio_cnt);
 	mp->num_gpio = mp_gpio_cnt;
 
-	mp->gpio_config = devm_kzalloc(dev, sizeof(struct mdss_gpio) *
+	mp->gpio_config = devm_kzalloc(dev, sizeof(struct mmdss_gpio) *
 		mp_gpio_cnt, GFP_KERNEL);
 	if (!mp->gpio_config) {
 		DEV_ERR("%s: can't alloc '%s' gpio mem\n", __func__,
@@ -4589,7 +4589,7 @@ static int hdmi_tx_get_dt_gpio_data(struct device *dev,
 			continue;
 		}
 		memcpy(&mp->gpio_config[j], &gpio_list[i],
-			sizeof(struct mdss_gpio));
+			sizeof(struct mmdss_gpio));
 
 		mp->gpio_config[j].gpio = (unsigned int)gpio;
 

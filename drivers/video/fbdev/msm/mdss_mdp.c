@@ -3064,8 +3064,7 @@ static int mdss_mdp_probe(struct platform_device *pdev)
 		(int) (unsigned long) mdata->vbif_io.base,
 		mdata->vbif_io.len);
 
-	rc = msm_mdss_ioremap_byname(pdev, &mdata->vbif_nrt_io,
-				     "vbif_nrt_phys");
+	rc = msm_mdss_ioremap_byname(pdev, &mdata->vbif_nrt_io, "vbif_nrt_phys");
 	if (rc)
 		pr_debug("unable to map MDSS VBIF non-realtime base\n");
 	else
