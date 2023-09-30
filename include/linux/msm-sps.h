@@ -1,4 +1,4 @@
-/* Copyright (c) 2011-2017, 2020, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011-2018, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -63,7 +63,7 @@
 #define SPS_ADDR_INVALID      (0xDEADBEEF)
 
 /* Invalid peripheral device enumeration class */
-#define SPS_CLASS_INVALID     (0xDEADBEEF)
+#define SPS_CLASS_INVALID     ((unsigned long)-1)
 
 /*
  * This value specifies different configurations for an SPS connection.
@@ -120,6 +120,8 @@
 #define SPS_BAM_HOLD_MEM            (1UL << 8)
 /* Use cached write pointer */
 #define SPS_BAM_CACHED_WP           (1UL << 10)
+/* Reset BAM with pipes connected */
+#define SPS_BAM_FORCE_RESET         (1UL << 11)
 
 /* BAM device management flags */
 
