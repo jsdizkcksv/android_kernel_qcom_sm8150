@@ -87,29 +87,6 @@ static void of_get_regulation_constraints(struct device_node *np,
 			constraints->ramp_disable = true;
 	}
 
-	ret = of_property_read_u32(np, "regulator-settling-time-us", &pval);
-	if (!ret)
-		constraints->settling_time = pval;
-
-	ret = of_property_read_u32(np, "regulator-settling-time-up-us", &pval);
-	if (!ret)
-		constraints->settling_time_up = pval;
-	if (constraints->settling_time_up && constraints->settling_time) {
-		pr_warn("%s: ambiguous configuration for settling time, ignoring 'regulator-settling-time-up-us'\n",
-			np->name);
-		constraints->settling_time_up = 0;
-	}
-
-	ret = of_property_read_u32(np, "regulator-settling-time-down-us",
-				   &pval);
-	if (!ret)
-		constraints->settling_time_down = pval;
-	if (constraints->settling_time_down && constraints->settling_time) {
-		pr_warn("%s: ambiguous configuration for settling time, ignoring 'regulator-settling-time-down-us'\n",
-			np->name);
-		constraints->settling_time_down = 0;
-	}
-
 	ret = of_property_read_u32(np, "regulator-enable-ramp-delay", &pval);
 	if (!ret)
 		constraints->enable_time = pval;
@@ -125,11 +102,11 @@ static void of_get_regulation_constraints(struct device_node *np,
 
 	if (!of_property_read_u32(np, "regulator-initial-mode", &pval)) {
 		if (desc && desc->of_map_mode) {
-			mode = desc->of_map_mode(pval);
-			if (mode == REGULATOR_MODE_INVALID)
+			ret = desc->of_map_mode(pval);
+			if (ret == -EINVAL)
 				pr_err("%s: invalid mode %u\n", np->name, pval);
 			else
-				constraints->initial_mode = mode;
+				constraints->initial_mode = ret;
 		} else {
 			pr_warn("%s: mapping for mode %d not defined\n",
 				np->name, pval);
@@ -168,12 +145,12 @@ static void of_get_regulation_constraints(struct device_node *np,
 		if (!of_property_read_u32(suspend_np, "regulator-mode",
 					  &pval)) {
 			if (desc && desc->of_map_mode) {
-				mode = desc->of_map_mode(pval);
-				if (mode == REGULATOR_MODE_INVALID)
+				ret = desc->of_map_mode(pval);
+				if (ret == -EINVAL)
 					pr_err("%s: invalid mode %u\n",
 					       np->name, pval);
 				else
-					suspend_state->mode = mode;
+					suspend_state->mode = ret;
 			} else {
 				pr_warn("%s: mapping for mode %d not defined\n",
 					np->name, pval);
@@ -339,7 +316,7 @@ struct regulator_init_data *regulator_of_get_init_data(struct device *dev,
 		search = of_get_child_by_name(dev->of_node,
 					      desc->regulators_node);
 	else
-		search = of_node_get(dev->of_node);
+		search = dev->of_node;
 
 	if (!search) {
 		dev_dbg(dev, "Failed to find regulator container node '%s'\n",
