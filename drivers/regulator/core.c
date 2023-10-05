@@ -1585,19 +1585,6 @@ static int regulator_resolve_supply(struct regulator_dev *rdev)
 		get_device(&r->dev);
 	}
 
-	/*
-	 * If the supply's parent device is not the same as the
-	 * regulator's parent device, then ensure the parent device
-	 * is bound before we resolve the supply, in case the parent
-	 * device get probe deferred and unregisters the supply.
-	 */
-	if (r->dev.parent && r->dev.parent != rdev->dev.parent) {
-		if (!device_is_bound(r->dev.parent)) {
-			put_device(&r->dev);
-			return -EPROBE_DEFER;
-		}
-	}
-
 	/* Recursively resolve the supply of the supply */
 	ret = regulator_resolve_supply(r);
 	if (ret < 0) {
@@ -4487,20 +4474,16 @@ regulator_register(const struct regulator_desc *regulator_desc,
 	else if (regulator_desc->supply_name)
 		rdev->supply_name = regulator_desc->supply_name;
 
-	ret = set_machine_constraints(rdev);
-	if (ret == -EPROBE_DEFER) {
-		/* Regulator might be in bypass mode and so needs its supply
-		 * to set the constraints */
-		/* FIXME: this currently triggers a chicken-and-egg problem
-		 * when creating -SUPPLY symlink in sysfs to a regulator
-		 * that is just being created */
-		ret = regulator_resolve_supply(rdev);
-		if (!ret)
-			ret = set_machine_constraints(rdev);
-		else
-			rdev_dbg(rdev, "unable to resolve supply early: %pe\n",
-				 ERR_PTR(ret));
-	}
+	/*
+	 * Attempt to resolve the regulator supply, if specified,
+	 * but don't return an error if we fail because we will try
+	 * to resolve it again later as more regulators are added.
+	 */
+	if (regulator_resolve_supply(rdev))
+		rdev_dbg(rdev, "unable to resolve supply\n");
+
+	ret = set_machine_constraints(rdev, constraints);
+
 	if (ret < 0)
 		goto wash;
 
