@@ -12,8 +12,6 @@
  */
 
 #include <dt-bindings/msm/power-on.h>
-#include <dt-bindings/spmi/spmi.h>
-#include <dt-bindings/interrupt-controller/arm-gic.h>
 
 &spmi_bus {
 	qcom,pmi8940@2 {
@@ -590,4 +588,4 @@
 			qcom,misc-trim-error-rc19p2-clk-reg-present;
 		};
 	};
-}
+};
