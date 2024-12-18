@@ -11,7 +11,6 @@
  * GNU General Public License for more details.
  */
 
-#include <dt-bindings/clock/qcom,audio-ext-clk.h>
 #include "msm-audio-lpass.dtsi"
 #include "msm8953-wsa881x.dtsi"
 
@@ -21,10 +20,10 @@
 };
 
 &soc {
-	audio_apr: qcom,msm-audio-apr {
+	qcom,msm-audio-apr {
 		compatible = "qcom,msm-audio-apr";
-		q6core: q6core {
-			compatible = "qcom,q6core-audio";
+		msm_audio_apr_dummy {
+			compatible = "qcom,msm-audio-apr-dummy";
 		};
 	};
 
@@ -113,6 +112,10 @@
 				"msm-dai-q6-mi2s.0", "msm-dai-q6-mi2s.1",
 				"msm-dai-q6-mi2s.2", "msm-dai-q6-mi2s.3",
 				"msm-dai-q6-mi2s.4", "msm-dai-q6-mi2s.6",
+				"msm-dai-q6-dev.16384", "msmdai-q6-dev.16385",
+				"msm-dai-q6-dev.16386", "msm-dai-q6-dev.16387",
+				"msm-dai-q6-dev.16390", "msm-dai-q6-dev.16391",
+				"msm-dai-q6-dev.16392", "msm-dai-q6-dev.16393",
 				"msm-dai-q6-dev.12288", "msm-dai-q6-dev.12289",
 				"msm-dai-q6-dev.12292", "msm-dai-q6-dev.12293",
 				"msm-dai-q6-dev.224", "msm-dai-q6-dev.225",
@@ -170,8 +173,6 @@
 			status = "okay";
 			compatible = "qcom,wsa881x-i2c-codec";
 			reg = <0x0f>;
-			clock-names = "wsa_mclk";
-			clocks = <&wsa881x_analog_clk 0>;
 			qcom,wsa-analog-vi-gpio = <&wsa881x_analog_vi_gpio>;
 			qcom,wsa-analog-clk-gpio = <&wsa881x_analog_clk_gpio>;
 			qcom,wsa-analog-reset-gpio =
@@ -201,14 +202,6 @@
 		pinctrl-names = "aud_active", "aud_sleep";
 		pinctrl-0 = <&wsa_reset_on>;
 		pinctrl-1 = <&wsa_reset_off>;
-	};
-
-	wsa881x_analog_clk: wsa_ana_clk {
-		compatible = "qcom,audio-ref-clk";
-		qcom,codec-ext-clk-src = <AUDIO_LPASS_MCLK_2>;
-		qcom,codec-lpass-ext-clk-freq = <9600000>;
-		qcom,codec-lpass-clk-id = <0x300>;
-		#clock-cells = <1>;
 	};
 
 	ext_codec: sound-9335 {
@@ -455,20 +448,20 @@
 		#address-cells = <2>;
 		#size-cells = <0>;
 		interrupt-parent = <&spmi_bus>;
-		interrupts = <0x1 0xf0 0x0 IRQ_TYPE_LEVEL_HIGH>,
-			<0x1 0xf0 0x1 IRQ_TYPE_LEVEL_HIGH>,
-			<0x1 0xf0 0x2 IRQ_TYPE_LEVEL_HIGH>,
-			<0x1 0xf0 0x3 IRQ_TYPE_LEVEL_HIGH>,
-			<0x1 0xf0 0x4 IRQ_TYPE_LEVEL_HIGH>,
-			<0x1 0xf0 0x5 IRQ_TYPE_LEVEL_HIGH>,
-			<0x1 0xf0 0x6 IRQ_TYPE_LEVEL_HIGH>,
-			<0x1 0xf0 0x7 IRQ_TYPE_LEVEL_HIGH>,
-			<0x1 0xf1 0x0 IRQ_TYPE_LEVEL_HIGH>,
-			<0x1 0xf1 0x1 IRQ_TYPE_LEVEL_HIGH>,
-			<0x1 0xf1 0x2 IRQ_TYPE_LEVEL_HIGH>,
-			<0x1 0xf1 0x3 IRQ_TYPE_LEVEL_HIGH>,
-			<0x1 0xf1 0x4 IRQ_TYPE_LEVEL_HIGH>,
-			<0x1 0xf1 0x5 IRQ_TYPE_LEVEL_HIGH>;
+		interrupts = <0x1 0xf0 0x0 IRQ_TYPE_NONE>,
+			<0x1 0xf0 0x1 IRQ_TYPE_NONE>,
+			<0x1 0xf0 0x2 IRQ_TYPE_NONE>,
+			<0x1 0xf0 0x3 IRQ_TYPE_NONE>,
+			<0x1 0xf0 0x4 IRQ_TYPE_NONE>,
+			<0x1 0xf0 0x5 IRQ_TYPE_NONE>,
+			<0x1 0xf0 0x6 IRQ_TYPE_NONE>,
+			<0x1 0xf0 0x7 IRQ_TYPE_NONE>,
+			<0x1 0xf1 0x0 IRQ_TYPE_NONE>,
+			<0x1 0xf1 0x1 IRQ_TYPE_NONE>,
+			<0x1 0xf1 0x2 IRQ_TYPE_NONE>,
+			<0x1 0xf1 0x3 IRQ_TYPE_NONE>,
+			<0x1 0xf1 0x4 IRQ_TYPE_NONE>,
+			<0x1 0xf1 0x5 IRQ_TYPE_NONE>;
 		interrupt-names = "spk_cnp_int",
 				"spk_clip_int",
 				"spk_ocp_int",
