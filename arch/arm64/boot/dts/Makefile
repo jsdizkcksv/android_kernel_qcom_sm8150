@@ -29,6 +29,11 @@ subdir-y	:= $(dts-dirs)
 
 dtstree		:= $(srctree)/$(src)
 
+vendor := $(dtstree)/vendor
+ifneq "$(wildcard $(vendor)/Makefile)" ""
+        subdir-y += vendor
+endif
+
 dtb-$(CONFIG_OF_ALL_DTBS) := $(patsubst $(dtstree)/%.dts,%.dtb, $(foreach d,$(dts-dirs), $(wildcard $(dtstree)/$(d)/*.dts)))
 
 always		:= $(dtb-y)
