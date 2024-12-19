@@ -4482,7 +4482,7 @@ regulator_register(const struct regulator_desc *regulator_desc,
 	if (regulator_resolve_supply(rdev))
 		rdev_dbg(rdev, "unable to resolve supply\n");
 
-	ret = set_machine_constraints(rdev, constraints);
+	ret = set_machine_constraints(rdev);
 
 	if (ret < 0)
 		goto wash;
