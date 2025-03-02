@@ -3861,6 +3861,13 @@ static int arm_smmu_domain_set_attr(struct iommu_domain *domain,
 		break;
 	}
 	case DOMAIN_ATTR_BITMAP_IOVA_ALLOCATOR:
+#ifdef CONFIG_ARCH_MSM8953
+	if (*((int *)data))
+					smmu_domain->attributes |=
+							1 << DOMAIN_ATTR_BITMAP_IOVA_ALLOCATOR;
+			ret = 0;
+			break;
+#endif
 		if (*((int *)data))
 			smmu_domain->attributes |=
 				1 << DOMAIN_ATTR_BITMAP_IOVA_ALLOCATOR;
