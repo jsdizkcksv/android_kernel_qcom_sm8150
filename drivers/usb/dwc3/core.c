@@ -96,7 +96,9 @@ static int dwc3_get_dr_mode(struct dwc3 *dwc)
 	if (dwc->dr_mode == USB_DR_MODE_UNKNOWN)
 		dwc->dr_mode = USB_DR_MODE_OTG;
 
+#ifdef CONFIG_USB_DWC3_MSM_LEGACY
 	dwc->is_drd = 0;
+#endif
 	mode = dwc->dr_mode;
 	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
 
@@ -131,10 +133,10 @@ static int dwc3_get_dr_mode(struct dwc3 *dwc)
 
 		dwc->dr_mode = mode;
 	}
-
+#ifdef CONFIG_USB_DWC3_MSM_LEGACY
 	if (dwc->dr_mode == USB_DR_MODE_OTG)
                 dwc->is_drd = 1;
-
+#endif
 	return 0;
 }
 
@@ -149,6 +151,7 @@ void dwc3_set_prtcap(struct dwc3 *dwc, u32 mode)
 	reg |= DWC3_GCTL_PRTCAPDIR(mode);
 	dwc3_writel(dwc->regs, DWC3_GCTL, reg);
 
+#ifdef CONFIG_USB_DWC3_MSM_LEGACY
 	reg |= DWC3_GCTL_U2RSTECN;
 	reg &= ~(DWC3_GCTL_SOFITPSYNC);
 	reg &= ~(DWC3_GCTL_PWRDNSCALEMASK);
@@ -175,7 +178,7 @@ void dwc3_set_prtcap(struct dwc3 *dwc, u32 mode)
 			dwc3_writel(dwc->regs, DWC3_GFLADJ, reg);
 		}
 	}
-
+#endif
 	dwc->current_dr_role = mode;
 }
 
@@ -1256,10 +1259,12 @@ static void dwc3_get_properties(struct dwc3 *dwc)
 	dwc->maximum_speed = usb_get_maximum_speed(dev);
 	dwc->max_hw_supp_speed = dwc->maximum_speed;
 	dwc->dr_mode = usb_get_dr_mode(dev);
+#ifdef CONFIG_USB_DWC3_MSM_LEGACY
 	if (dwc->dr_mode == USB_DR_MODE_UNKNOWN) {
                 dwc->dr_mode = USB_DR_MODE_OTG;
                 dwc->is_drd = 1;
         }
+#endif
 
 	dwc->hsphy_mode = of_usb_get_phy_mode(dev->of_node);
 
