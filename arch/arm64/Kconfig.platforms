@@ -399,4 +399,8 @@ config MACH_XIAOMI_SANTONI
 	help
 	  This enables support for Xiaomi Redmi 4/4X(santoni).
 
+config MACH_XIAOMI_ULYSSE
+	bool "Xiaomi Redmi Note 5A (Unified)"
+        help
+          This enables support for Xiaomi Redmi Note 5A (Unified).
 endmenu
